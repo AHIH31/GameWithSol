@@ -1,6 +1,6 @@
 package model.effects;
 
-
+import model.world.Champion;
 
 public class Effect {
 	private String name;
@@ -26,6 +26,9 @@ public class Effect {
 
 	public EffectType getType() {
 		return type;
+	}
+	public void apply(Champion c) {
+		
 	}
 
 	
