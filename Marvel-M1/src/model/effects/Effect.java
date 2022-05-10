@@ -1,8 +1,11 @@
 package model.effects;
 
+import model.abilities.AreaOfEffect;
+import model.abilities.CrowdControlAbility;
+import model.abilities.DamagingAbility;
+import model.world.Champion;
 
-
-public class Effect {
+abstract public class Effect implements Cloneable{
 	private String name;
 	private EffectType type;
 	private int duration;
@@ -27,7 +30,8 @@ public class Effect {
 	public EffectType getType() {
 		return type;
 	}
-
+	abstract public void apply(Champion c);
+	abstract public void remove(Champion c);
 	
-//hello
+
 }
