@@ -1,6 +1,10 @@
 package model.abilities;
 
-public class Ability {
+import java.util.ArrayList;
+
+import model.world.Damageable;
+
+abstract public class Ability {
 	private String name;
 	private int manaCost;
 	private int baseCooldown;
@@ -9,7 +13,7 @@ public class Ability {
 	private AreaOfEffect castArea;
 	private int requiredActionPoints;
 
-	public Ability(String name, int cost, int baseCoolDown, int castRange, AreaOfEffect area, int required) {
+	 public Ability(String name, int cost, int baseCoolDown, int castRange, AreaOfEffect area, int required) {
 		this.name = name;
 		this.manaCost = cost;
 		this.baseCooldown = baseCoolDown;
@@ -54,5 +58,5 @@ public class Ability {
 	public int getRequiredActionPoints() {
 		return requiredActionPoints;
 	}
-
+	 abstract public void execute(ArrayList<Damageable> targets);
 }
