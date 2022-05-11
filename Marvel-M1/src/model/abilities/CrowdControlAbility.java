@@ -23,6 +23,11 @@ public class CrowdControlAbility extends Ability {
 
 	public void execute(ArrayList<Damageable> targets) {
 		for(int i = 0 ; i<targets.size(); i++) {
+			try {
+				getEffect().clone();
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
 			effect.apply((Champion)targets.get(i));
 			this.setCurrentCooldown(this.getBaseCooldown());
 

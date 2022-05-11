@@ -5,7 +5,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Stack;
 
+import exceptions.ChampionDisarmedException;
+import exceptions.GameActionException;
+import exceptions.InvalidTargetException;
+import exceptions.UnallowedMovementException;
 import model.abilities.Ability;
 import model.abilities.AreaOfEffect;
 import model.abilities.CrowdControlAbility;
@@ -14,6 +19,7 @@ import model.abilities.HealingAbility;
 import model.effects.Disarm;
 import model.effects.Dodge;
 import model.effects.Effect;
+import model.effects.EffectType;
 import model.effects.Embrace;
 import model.effects.PowerUp;
 import model.effects.Root;
@@ -24,7 +30,9 @@ import model.effects.SpeedUp;
 import model.effects.Stun;
 import model.world.AntiHero;
 import model.world.Champion;
+import model.world.Condition;
 import model.world.Cover;
+import model.world.Direction;
 import model.world.Hero;
 import model.world.Villain;
 
@@ -42,7 +50,6 @@ public class Game {
 
 	public Game(Player first, Player second) {
 		firstPlayer = first;
-
 		secondPlayer = second;
 		availableChampions = new ArrayList<Champion>();
 		availableAbilities = new ArrayList<Ability>();
@@ -51,7 +58,6 @@ public class Game {
 		placeChampions();
 		placeCovers();
 	}
-
 	public static void loadAbilities(String filePath) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
 		String line = br.readLine();
@@ -243,5 +249,171 @@ public class Game {
 	public static int getBoardheight() {
 		return BOARDHEIGHT;
 	}
+	public Champion getCurrentChampion() {
+		PriorityQueue tmp = new PriorityQueue(turnOrder.size());
+		for(int i=0;i<turnOrder.size();i++) {
+			tmp.insert(turnOrder.peekMin());
+			return (Champion)turnOrder.remove();	
+		}
+		for(int i=0;i<tmp.size();i++) {
+			turnOrder.insert(tmp.remove());
+		}
+		return null;
+	}
+	 public Player checkGameOver() {
+		 if(getFirstPlayer().getTeam().get(0).getCondition().equals(Condition.KNOCKEDOUT) && getFirstPlayer().getTeam().get(1).equals(Condition.KNOCKEDOUT) && getFirstPlayer().getTeam().get(2).equals(Condition.KNOCKEDOUT)) {
+			 if(getSecondPlayer().getTeam().get(0).getCondition() != (Condition.KNOCKEDOUT) ||getSecondPlayer().getTeam().get(1).getCondition() != (Condition.KNOCKEDOUT) || getSecondPlayer().getTeam().get(2).getCondition() != (Condition.KNOCKEDOUT))
+				 return secondPlayer;
+			 else 
+				 return firstPlayer;
+		 }
+		 return null;
+	 }
+	 public void move(Direction d) throws UnallowedMovementException {
+		 if(getCurrentChampion().getCurrentActionPoints()!=0) {
+			 if(d.UP != null || getCurrentChampion().getLocation().getY()==4) {
+				 throw new UnallowedMovementException();
+			 }
+			 else {
+				 Point newPoint = new Point();
+				 newPoint.setLocation(getCurrentChampion().getLocation().getX(), getCurrentChampion().getLocation().getY()+1);
+				 getCurrentChampion().setLocation(newPoint);
+				 getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints()-1);
+			 }
+			 if(d.DOWN != null || getCurrentChampion().getLocation().getY()==0) {
+				 throw new UnallowedMovementException();
+			 }
+			 else {
+				 Point newPoint = new Point();
+				 newPoint.setLocation(getCurrentChampion().getLocation().getX(), getCurrentChampion().getLocation().getY()-1);
+				 getCurrentChampion().setLocation(newPoint);
+				 getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints()-1);
+			 }
+			 if(d.LEFT != null || getCurrentChampion().getLocation().getX()==0) {
+				 throw new UnallowedMovementException();
+			 }
+			 else {
+				 Point newPoint = new Point();
+				 newPoint.setLocation(getCurrentChampion().getLocation().getX()-1, getCurrentChampion().getLocation().getY());
+				 getCurrentChampion().setLocation(newPoint);
+				 getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints()-1);
+			 }
+			 if(d.RIGHT != null || getCurrentChampion().getLocation().getX()==4) {
+				 throw new UnallowedMovementException();
+			 }
+			 else {
+				 Point newPoint = new Point();
+				 newPoint.setLocation(getCurrentChampion().getLocation().getX()+1, getCurrentChampion().getLocation().getY());
+				 getCurrentChampion().setLocation(newPoint);
+				 getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints()-1);
+			 }
+			
+		 }
+	 }
+	 public void attack(Direction d) throws InvalidTargetException, ChampionDisarmedException {
+		 if(check(getCurrentChampion())==true){
+			 throw new ChampionDisarmedException();
+		 }
+		 else {
+		 Point other = new Point();
+		 Player currentPlayer = choosePlayer(getCurrentChampion());
+		 switch(d) {
+		 	case UP:
+		 		other.setLocation(getCurrentChampion().getLocation().getX(), getCurrentChampion().getLocation().getY()+getCurrentChampion().getAttackRange());
+		 		if((other != null)&&(other.getY()>4)&&(getOtherPoint(currentPlayer) == other)) {
+		 
+		 				throw new InvalidTargetException();
+		 		}
+		 			
+		 		else {
+		 				if((getEnemyCh(currentPlayer) instanceof AntiHero && getCurrentChampion() instanceof AntiHero)||(getEnemyCh(currentPlayer) instanceof Hero && getCurrentChampion() instanceof Hero) || (getEnemyCh(currentPlayer) instanceof Villain && getCurrentChampion() instanceof Villain)) {
+		 						 getEnemyCh(currentPlayer).setCurrentHP((int)(getEnemyCh(currentPlayer).getCurrentHP()-(getCurrentChampion().getAttackDamage())));
+		 					} 
+		 					else {
+		 						 getEnemyCh(currentPlayer).setCurrentHP((int)(getEnemyCh(currentPlayer).getCurrentHP()-(getCurrentChampion().getAttackDamage()*1.5)));
+		 					}
+		 				 }
+		 			
+		 		
+		 	case DOWN:
+		 		other.setLocation(getCurrentChampion().getLocation().getX(), getCurrentChampion().getLocation().getY()-getCurrentChampion().getAttackRange());
+		 		if((other != null)&&(other.getY()<0)&&(getOtherPoint(currentPlayer) == other)) {
+		 			 
+	 				throw new InvalidTargetException();
+	 		}
+		 			else {
+		 				if((getEnemyCh(currentPlayer) instanceof AntiHero && getCurrentChampion() instanceof AntiHero)||(getEnemyCh(currentPlayer) instanceof Hero && getCurrentChampion() instanceof Hero) || (getEnemyCh(currentPlayer) instanceof Villain && getCurrentChampion() instanceof Villain)) {
+		 						 getEnemyCh(currentPlayer).setCurrentHP((int)(getEnemyCh(currentPlayer).getCurrentHP()-(getCurrentChampion().getAttackDamage())));
+		 					} 
+		 					else {
+		 						 getEnemyCh(currentPlayer).setCurrentHP((int)(getEnemyCh(currentPlayer).getCurrentHP()-(getCurrentChampion().getAttackDamage()*1.5)));
+		 					}
+		 				 }
+		 	case RIGHT:
+		 		other.setLocation(getCurrentChampion().getLocation().getX(), getCurrentChampion().getLocation().getX()+getCurrentChampion().getAttackRange());
+		 		if((other != null)&&(other.getX()>4)&&(getOtherPoint(currentPlayer) == other)) {
+		 
+		 				throw new InvalidTargetException();
+		 		}
+		 			
+		 		else {
+		 				if((getEnemyCh(currentPlayer) instanceof AntiHero && getCurrentChampion() instanceof AntiHero)||(getEnemyCh(currentPlayer) instanceof Hero && getCurrentChampion() instanceof Hero) || (getEnemyCh(currentPlayer) instanceof Villain && getCurrentChampion() instanceof Villain)) {
+		 						 getEnemyCh(currentPlayer).setCurrentHP((int)(getEnemyCh(currentPlayer).getCurrentHP()-(getCurrentChampion().getAttackDamage())));
+		 					} 
+		 					else {
+		 						 getEnemyCh(currentPlayer).setCurrentHP((int)(getEnemyCh(currentPlayer).getCurrentHP()-(getCurrentChampion().getAttackDamage()*1.5)));
+		 					}
+		 				 }
+		 	case LEFT:
+		 		other.setLocation(getCurrentChampion().getLocation().getX(), getCurrentChampion().getLocation().getX()-getCurrentChampion().getAttackRange());
+		 		if((other != null)&&(other.getX()<0)&&(getOtherPoint(currentPlayer) == other)) {
+		 			 
+	 				throw new InvalidTargetException();
+	 		}
+		 			else {
+		 				if((getEnemyCh(currentPlayer) instanceof AntiHero && getCurrentChampion() instanceof AntiHero)||(getEnemyCh(currentPlayer) instanceof Hero && getCurrentChampion() instanceof Hero) || (getEnemyCh(currentPlayer) instanceof Villain && getCurrentChampion() instanceof Villain)) {
+		 						 getEnemyCh(currentPlayer).setCurrentHP((int)(getEnemyCh(currentPlayer).getCurrentHP()-(getCurrentChampion().getAttackDamage())));
+		 					} 
+		 					else {
+		 						 getEnemyCh(currentPlayer).setCurrentHP((int)(getEnemyCh(currentPlayer).getCurrentHP()-(getCurrentChampion().getAttackDamage()*1.5)));
+		 					}
+		 				 }
+		 		
+		 			}
+		 		
+		 }
+		 } 
+		 
+	 
+	 public Player choosePlayer(Champion currentCh) {
+		 for(int i=0;i<firstPlayer.getTeam().size();i++) {
+			 if(firstPlayer.getTeam().get(i)==currentCh)
+				 return secondPlayer;
+			 else
+				 return firstPlayer;
+		 }
+		 return null;
+	 }
+	 public Point getOtherPoint(Player currentPlayer) {
+		 for(int i=0;i<currentPlayer.getTeam().size();i++) {
+			 return currentPlayer.getTeam().get(i).getLocation();
+		 }
+		 return null;
+	 }
+	 public boolean check(Champion currentCh) {
+		 for(int i=0;i<currentCh.getAppliedEffects().size(); i++){
+			 if(currentCh.getAppliedEffects().get(i).getName().equals("Disarm"))
+				 return true;
+			 else
+				 return false;
+		 }
+		return true;
+	 }
+	 public Champion getEnemyCh(Player current) {
+		 for(int i=0;i<current.getTeam().size(); i++){
+			 return current.getTeam().get(i);
+		 }
+		 return null;
+	 }
 }
 //hello

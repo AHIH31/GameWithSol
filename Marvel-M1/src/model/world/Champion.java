@@ -146,50 +146,13 @@ abstract public class Champion implements Comparable{
 		Champion other = (Champion) o;
 		if(this.getSpeed()>other.getSpeed())
 			return 1;
-		if(other.getSpeed()>this.getSpeed())
+		if(this.getSpeed()<other.getSpeed())
 			return -1;
 		else
-			return 0;
+			return this.getName().compareTo(other.getName());
 	}
 
-	public ArrayList<Champion> helper(int pr, Champion other, ArrayList<Champion>targets){
-		switch(pr) {
-		case 1:
-			targets.add(this);
-		case -1:
-			targets.add(other);
-		case 0:
-			if(this.getName().compareTo(other.getName())==-1)
-				targets.add(this);
-			else
-				targets.add(other);
-			
-		}
-		return targets;
-	}
 	
-	public void useLeaderAbility(ArrayList<Champion> targets) {
-		for(int i=0;i<targets.size();i++) {
-			helper(this.compareTo(targets.get(i)),targets.get(i),targets);
-		}
-		for(int i=0;i<targets.size();i++) {
-			if(targets.get(i) instanceof Hero) {
-				targets.remove(targets.get(i).getAppliedEffects());
-				Embrace embrace = new Embrace(2);
-				embrace.apply(targets.get(i));
-				
-			}
-			if(targets.get(i) instanceof Villain) {
-				if((targets.get(i).getCurrentHP())/(targets.get(i).getMaxHP()) < 0.3)
-					targets.get(i).setCondition(Condition.KNOCKEDOUT);
-					
-			}
-			if(targets.get(i) instanceof AntiHero) {
-				Stun stun = new Stun(2);
-				stun.apply(targets.get(i));
-			}
-		}
-	}
-	
+	abstract public void useLeaderAbility(ArrayList<Champion> targets);
 
 }

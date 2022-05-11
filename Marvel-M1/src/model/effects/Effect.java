@@ -30,6 +30,10 @@ abstract public class Effect implements Cloneable{
 	public EffectType getType() {
 		return type;
 	}
+	public Object clone() throws CloneNotSupportedException {  
+		return super.clone();  
+		}  
+		  
 
 	abstract public void apply(Champion c);
 	abstract public void remove(Champion c);

@@ -16,8 +16,11 @@ public class Villain extends Champion {
 
 	
 	public void useLeaderAbility(ArrayList<Champion> targets) {
-	
-		
+		for(int i=0;i<targets.size();i++) {
+		if((targets.get(i).getCurrentHP())/(targets.get(i).getMaxHP()) < 0.3)
+			targets.get(i).setCondition(Condition.KNOCKEDOUT);
+		}
+			
 	}
 
 	
