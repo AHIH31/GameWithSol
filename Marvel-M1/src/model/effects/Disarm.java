@@ -15,7 +15,7 @@ public class Disarm extends Effect {
 	public void apply(Champion c) {
 		DamagingAbility Punch = new DamagingAbility("Punch", 0, 1, 1, AreaOfEffect.SINGLETARGET, 1, 50);
 		c.getAbilities().add(Punch);
-		c.getAppliedEffects().add(this);
+	
 		
 	}
 

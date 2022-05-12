@@ -21,14 +21,12 @@ public class CrowdControlAbility extends Ability {
 	}
 
 
-	public void execute(ArrayList<Damageable> targets) {
+	public void execute(ArrayList<Damageable> targets) throws java.lang.CloneNotSupportedException {
 		for(int i = 0 ; i<targets.size(); i++) {
-			try {
-				getEffect().clone();
-			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
-			}
-			effect.apply((Champion)targets.get(i));
+			
+			Effect e = (Effect)getEffect().clone();
+			((Champion)targets.get(i)).getAppliedEffects().add(e);
+			e.apply((Champion)targets.get(i));
 			this.setCurrentCooldown(this.getBaseCooldown());
 
 		}

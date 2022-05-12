@@ -9,7 +9,7 @@ import model.effects.Effect;
 import model.effects.Embrace;
 import model.effects.Stun;
 
-abstract public class Champion implements Comparable{
+abstract public class Champion implements Comparable , Damageable{
 	private String name;
 	private int maxHP;
 	private int currentHP;

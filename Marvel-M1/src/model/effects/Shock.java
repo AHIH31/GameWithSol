@@ -10,7 +10,6 @@ public class Shock extends Effect {
 	}
 
 	public void apply(Champion c) {
-		c.getAppliedEffects().add(this);
 		c.setSpeed((int)(c.getSpeed() * 0.9));
 		c.setAttackDamage((int)(c.getAttackDamage() * 0.9));
 		c.setMaxActionPointsPerTurn((int)(c.getMaxActionPointsPerTurn() - 1));

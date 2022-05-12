@@ -9,8 +9,7 @@ public class Stun extends Effect {
 		super("Stun", duration, EffectType.DEBUFF);
 	}
 
-	public void apply(Champion c) {
-		c.getAppliedEffects().add(this);		
+	public void apply(Champion c) {	
 		c.setCondition(Condition.INACTIVE);
 	}
 

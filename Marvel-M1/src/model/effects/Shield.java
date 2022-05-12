@@ -10,7 +10,7 @@ public class Shield extends Effect {
 	}
 
 	public void apply(Champion c) {
-		c.getAppliedEffects().add(this);
+		
 		c.setSpeed((int)(c.getSpeed() * 1.02));
 			
 	}
