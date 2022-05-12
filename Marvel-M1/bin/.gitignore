@@ -1,11 +1,2 @@
-<<<<<<< HEAD
-/engine/
-=======
->>>>>>> branch 'master' of https://github.com/AHIH31/GameWithSol.git
 /model/
-<<<<<<< HEAD
-=======
-/exceptions/
->>>>>>> branch 'master' of https://github.com/AHIH31/GameWithSol.git
-/test/
-/tests/
+/engine/
