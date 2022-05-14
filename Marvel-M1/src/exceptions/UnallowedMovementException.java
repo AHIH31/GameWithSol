@@ -1,6 +1,5 @@
 package exceptions;
 
-@SuppressWarnings("serial")
 public class UnallowedMovementException extends GameActionException {
 
 	public UnallowedMovementException() {
