@@ -336,8 +336,8 @@ public class Game {
 		 		if(getCurrentChampion().getLocation().y == 4)
 		 			throw new InvalidTargetException();
 		 		else {
-		 			int y = getCurrentChampion().getLocation().y;
-		 			int x = getCurrentChampion().getLocation().x;
+		 			int y = getCurrentChampion().getLocation().x;
+		 			int x = getCurrentChampion().getLocation().y;
 			 		for(int i=1; i<=(int) getCurrentChampion().getAttackRange();i++) {
 			 			if(y+i<=4&&board[y+1][x]== null)
 			 			target.add((Damageable) board[y+i][x]);
