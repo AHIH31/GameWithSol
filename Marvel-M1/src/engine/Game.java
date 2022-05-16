@@ -336,6 +336,7 @@ public class Game {
 	 public void attack(Direction d) throws InvalidTargetException, ChampionDisarmedException, NotEnoughResourcesException {
 		 if(getCurrentChampion().getCurrentActionPoints()>=2) {
 				//condition same team
+			Player current = currentChampPlayer(getCurrentChampion());
 		if(d == Direction.UP) {
 			 Damageable target = targets(getCurrentChampion().getAttackRange(),Direction.UP);
 			 if(target instanceof Cover) {
@@ -399,8 +400,8 @@ public class Game {
 			 			 }
 			 			 }
 		 			}
-			 	
-		}	
+		}
+		}
 		if(d == Direction.RIGHT) {
 			 Damageable target = targets(getCurrentChampion().getAttackRange(),Direction.RIGHT);
 			 if(target instanceof Cover) {
@@ -601,10 +602,8 @@ public class Game {
 			 	
 		}
 		 }
-		 else
-			 throw new NotEnoughResourcesException();
-	 }
-
+	
+	 
 
 	 public void castAbility(Ability a) throws CloneNotSupportedException, InvalidTargetException {
 		ArrayList<Damageable> targets = abilityRange(a.getCastRange());
@@ -759,7 +758,7 @@ public class Game {
 					 indexUp++;
 				 
 			 }
-				 if(flag==true && indexUp<4)
+				 if(flag==true)
 					 return (Damageable) board[y+indexUp][x];
 				 else
 					 getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() -1);
