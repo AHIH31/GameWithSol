@@ -16,7 +16,7 @@ public class Player {
 		
 	}
 
-
+ 
 	public Champion getLeader() {
 		return leader;
 	}
