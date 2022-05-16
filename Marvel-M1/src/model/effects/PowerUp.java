@@ -15,24 +15,28 @@ public class PowerUp extends Effect {
 
 		for(int i = 0; i<c.getAbilities().size(); i++) {
 			
-			if(c.getAbilities().get(i) instanceof DamagingAbility) 
-				((DamagingAbility) c.getAbilities().get(i)).setDamageAmount(
-				(int) ( (((DamagingAbility) c.getAbilities().get(i))).getDamageAmount() * 1.20));
-			if(c.getAbilities().get(i) instanceof HealingAbility) 
-				((HealingAbility) c.getAbilities().get(i)).setHealAmount(
-				(int) ( (((HealingAbility) c.getAbilities().get(i))).getHealAmount() * 1.20));
+			if(c.getAbilities().get(i) instanceof DamagingAbility) {
+				double x = ((((DamagingAbility) c.getAbilities().get(i))).getDamageAmount() * 1.20);
+				((DamagingAbility) c.getAbilities().get(i)).setDamageAmount((int)x);
+				}
+			if(c.getAbilities().get(i) instanceof HealingAbility) { 
+				double y =((((HealingAbility) c.getAbilities().get(i))).getHealAmount() * 1.20);
+				((HealingAbility) c.getAbilities().get(i)).setHealAmount((int) y);
+				}
 		}
 	
 	}
 	public void remove(Champion c) {
 		c.getAppliedEffects().remove(this);
 		for(int i = 0; i<c.getAbilities().size(); i++) {
-			if(c.getAbilities().get(i) instanceof DamagingAbility) 
-				((DamagingAbility) c.getAbilities().get(i)).setDamageAmount(
-				(int) ( (((DamagingAbility) c.getAbilities().get(i))).getDamageAmount() * 0.8));
-			if(c.getAbilities().get(i) instanceof HealingAbility) 
-				((HealingAbility) c.getAbilities().get(i)).setHealAmount(
-				(int) ( (((HealingAbility) c.getAbilities().get(i))).getHealAmount() * 0.8));
+			if(c.getAbilities().get(i) instanceof DamagingAbility) {
+				double x =((((DamagingAbility) c.getAbilities().get(i))).getDamageAmount() * 0.8);
+				((DamagingAbility) c.getAbilities().get(i)).setDamageAmount((int) x);
+			}
+			if(c.getAbilities().get(i) instanceof HealingAbility) {
+				double y = ((((HealingAbility) c.getAbilities().get(i))).getHealAmount() * 0.8);
+				((HealingAbility) c.getAbilities().get(i)).setHealAmount((int)y);
+			}
 		}
 	}
 }
