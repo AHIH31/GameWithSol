@@ -131,7 +131,7 @@ abstract public class Champion implements Comparable, Damageable{
 			currentActionPoints=maxActionPointsPerTurn;
 		else 
 			if(currentActionPoints<0)
-			currentActionPoints=0;
+				currentActionPoints=0;
 		this.currentActionPoints = currentActionPoints;
 	}
 

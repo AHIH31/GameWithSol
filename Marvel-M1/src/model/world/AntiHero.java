@@ -22,6 +22,9 @@ public class AntiHero extends Champion {
 			stun.apply(targets.get(i));
 		}
 	}
+	public String toString() {
+		return "AntiHero";
+	}
 
 	
 

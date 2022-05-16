@@ -33,6 +33,9 @@ public class Hero extends Champion {
 		}
 		
 	}
+	public String toString() {
+		return "Hero";
+	}
 
 	
 }
