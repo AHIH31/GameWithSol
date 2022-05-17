@@ -21,7 +21,7 @@ public class Embrace extends Effect {
 		c.getAppliedEffects().remove(this);
 		double x = c.getSpeed()*0.84;
 		c.setSpeed((int) x);
-		double y = c.getAttackDamage()*0.8;
+		double y = c.getAttackDamage()/1.2;
 		c.setAttackDamage((int) y);
 	}
 

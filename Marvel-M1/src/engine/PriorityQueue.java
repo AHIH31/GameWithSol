@@ -1,5 +1,7 @@
 package engine;
 
+import model.world.Champion;
+
 public class PriorityQueue {
 
 	private Comparable[] elements;
@@ -10,6 +12,11 @@ public class PriorityQueue {
 		maxSize = size;
 		elements = new Comparable[maxSize];
 		nItems = 0;
+	}
+	public void display() {
+		for(int i = 0;i<nItems;i++) {
+			System.out.print( ((Champion)  elements[i]).getName() + "  , ");
+		}
 	}
 
 	public void insert(Comparable item) {

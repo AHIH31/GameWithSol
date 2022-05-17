@@ -9,7 +9,7 @@ import model.effects.Effect;
 import model.effects.Embrace;
 import model.effects.Stun;
 
-abstract public class Champion implements Comparable, Damageable{
+abstract public class Champion implements Comparable , Damageable{
 	private String name;
 	private int maxHP;
 	private int currentHP;
@@ -142,14 +142,14 @@ abstract public class Champion implements Comparable, Damageable{
 	public void setMaxActionPointsPerTurn(int maxActionPointsPerTurn) {
 		this.maxActionPointsPerTurn = maxActionPointsPerTurn;
 	}
-	public int compareTo(Object o) {
-		Champion o1 = (Champion) o;
-		if(this.getSpeed()>o1.getSpeed())
+	public int compareTo(Object c) {
+		Champion o = (Champion) c;
+		if(this.getSpeed()>o.getSpeed())
 			return -1;
-		if(this.getSpeed()<o1.getSpeed())
-			return 1;
 		else
-			return this.getName().compareTo(o1.getName());
+			return 1;
+//		else
+//			return this.getName().compareTo(o.getName());
 	}
 
 	

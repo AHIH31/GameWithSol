@@ -9,10 +9,6 @@ public class Villain extends Champion {
 
 	}
 
-	public int compareTo(Object o) {
-		
-		return 0;
-	}
 
 	
 	public void useLeaderAbility(ArrayList<Champion> targets) {
