@@ -346,10 +346,11 @@ public class Game {
 			if (d == Direction.UP) {
 				Damageable target = targets(getCurrentChampion().getAttackRange(), Direction.UP);
 				if (target == null) {
-					System.out.print(1);
+					//System.out.print(1);
 					getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
 
-				} else {
+				}
+				else {
 					if (target instanceof Cover) {
 						target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
 						getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
@@ -687,7 +688,8 @@ public class Game {
 					}
 				}
 			}
-		} else
+		}
+		else
 			throw new NotEnoughResourcesException();
 	}
 
@@ -1128,7 +1130,9 @@ public class Game {
 
 	public void endTurn() {
 		turnOrder.remove();
+		System.out.print(2);
 		if (turnOrder.isEmpty()) {
+			System.out.print(1);
 			prepareChampionTurns();
 		} else {
 			for (int i = 0; i < turnOrder.size(); i++) {
@@ -1148,7 +1152,9 @@ public class Game {
 
 			getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getMaxActionPointsPerTurn());
 			;
-			prepareChampionTurns();
+			System.out.println(0);
+			//prepareChampionTurns();
+			
 		}
 	}
 
@@ -1168,7 +1174,7 @@ public class Game {
 		int y = getCurrentChampion().getLocation().x;
 		Damageable damg = null;
 		if (d == Direction.UP) {
-			System.out.print("hello");
+		//	System.out.print("hello");
 			boolean flag = false;
 			int indexUp = 1;
 			System.out.print(range);
@@ -1178,18 +1184,20 @@ public class Game {
 				else if ((y + i <= 4) && (board[y + i][x] != null)) {
 					flag = true;
 					break;
-				} else
+				}
+				else if ((y + i <= 4) || (board[y + i][x] == null)) {
 					indexUp++;
 
 			}
-
+			}
 			if (flag == true) {
-				System.out.print(board[y - indexUp][x]);
-
 				return (Damageable) board[y + indexUp][x];
-			} else
+			} 
+			else {
 				getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 1);
-		} else if (d == Direction.DOWN) {
+			}
+		}
+		 else if (d == Direction.DOWN) {
 			boolean flagDown = false;
 			int indexDown = 1;
 			for (int i = 1; i <= range; i++) {
@@ -1224,17 +1232,23 @@ public class Game {
 				getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 1);
 		} else if (d == Direction.LEFT) {
 			boolean flagLeft = false;
+			System.out.println(getCurrentChampion());
 			int indexLeft = 1;
-			for (int i = 1; i <= range; i++) {
+			for (int i = 1; i <= range ; i++) {
+				
 				if ((x - i >= 0) && (board[y][x - i] != null)) {
 					flagLeft = true;
 					break;
 				} else
 					indexLeft++;
 			}
+			System.out.println(flagLeft);
 
-			if (flagLeft == true)
+			if (flagLeft == true) {
+				System.out.println(board[y][x - indexLeft]);
 				return (Damageable) board[y][x - indexLeft];
+				
+			}
 			else
 				getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 1);
 		}

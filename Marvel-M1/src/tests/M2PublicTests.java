@@ -20705,7 +20705,8 @@ public class M2PublicTests {
 		Field board = createdGame.getClass().getDeclaredField("board");
 		board.setAccessible(true);
 		board.set(createdGame, boardGame);
-
+		
+		
 		Method setSpeed = champ1.getClass().getMethod("setSpeed", int.class);
 		setSpeed.invoke(champ3, 10);
 
@@ -20951,6 +20952,8 @@ public class M2PublicTests {
 		Field board = createdGame.getClass().getDeclaredField("board");
 		board.setAccessible(true);
 		board.set(createdGame, boardGame);
+		Method m00 = createdGame.getClass().getMethod("getCurrentChampion");
+		System.out.println(m00.invoke(createdGame));
 
 		Method setSpeed = champ1.getClass().getMethod("setSpeed", int.class);
 		setSpeed.invoke(champ3, 10);
@@ -21029,6 +21032,7 @@ public class M2PublicTests {
 					int attackDamage = (Integer) m4.invoke(champ3);
 
 					int expectedHP = oldHP - attackDamage;
+					System.out.println(champ3);
 
 					assertTrue("The HP of the villain attacked by a villain is not updated correctly. Expected "
 							+ expectedHP + " but was " + newHP + ".", newHP == expectedHP);
