@@ -344,19 +344,16 @@ public class Game {
 		if (getCurrentChampion().getCurrentActionPoints() >= 2) {
 			// condition same team
 			// Player current = currentChampPlayer(getCurrentChampion());
-			if (d == Direction.UP) {
-				Damageable target = targets(getCurrentChampion().getAttackRange(), Direction.UP);
+			
+				Damageable target = targets(getCurrentChampion().getAttackRange(), d);
 				if (target == null) {
-					//System.out.print(1);
 					getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-
 				}
 				else {
 					if (target instanceof Cover) {
 						target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
 						getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
 					} else if (target instanceof Champion) {
-//						System.out.println("hhhh");
 						if (checkDisarm(getCurrentChampion()) == true) {
 							throw new ChampionDisarmedException();
 						} else if (checkShield((Champion) target) == true) {
@@ -364,6 +361,7 @@ public class Game {
 							getCurrentChampion()
 									.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
 						}
+							
 //						 else if (checkDodge((Champion) target) == false) {
 //							System.out.println(2);
 //							target.setCurrentHP(
@@ -372,14 +370,12 @@ public class Game {
 //							.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
 //						} 
 							else if (target instanceof Hero) {
-							
-							//System.out.print(0);
 							if (getCurrentChampion() instanceof AntiHero) {
+								target.setCurrentHP(
+										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
+								getCurrentChampion()
+										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
 								
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
 							}
 							if (getCurrentChampion() instanceof Villain) {
 								target.setCurrentHP(
@@ -429,271 +425,16 @@ public class Game {
 										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
 							}
 						}
+					//remove champion
+					// set condition to knockedout
+					// friend
 					}
 				}
 			}
-
-			if (d == Direction.RIGHT) {
-				Damageable target = targets(getCurrentChampion().getAttackRange(), Direction.RIGHT);
-				if (target == null) {
-					getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-
-				} else {
-					if (target instanceof Cover) {
-						target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-						getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-					} else if (target instanceof Champion) {
-						if (checkDisarm(getCurrentChampion()) == true) {
-							throw new ChampionDisarmedException();
-						} else if (checkShield((Champion) target) == true) {
-							getCurrentChampion()
-									.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-						} else if (checkDodge((Champion) target) == true) {
-							int prob = (int) Math.round(Math.random());
-							if (prob == 1) {
-								target.setCurrentHP(
-										(int) (target.getCurrentHP() - (getCurrentChampion().getAttackDamage())));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							getCurrentChampion()
-									.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-						} else if (target instanceof Hero) {
-							//System.out.print(0);
-							if (getCurrentChampion() instanceof AntiHero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Villain) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Hero) {
-								target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-						} else if (target instanceof Villain) {
-							if (getCurrentChampion() instanceof AntiHero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Hero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Villain) {
-								target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-						} else if (target instanceof AntiHero) {
-
-							if (getCurrentChampion() instanceof Hero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Villain) {
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-							}
-							if (getCurrentChampion() instanceof AntiHero) {
-								target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-						}
-					}
-
-				}
-			}
-			if (d == Direction.DOWN) {
-				Damageable target = targets(getCurrentChampion().getAttackRange(), Direction.DOWN);
-				//System.out.print(target);
-				if (target == null) {
-					getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-				} else {
-					if (target instanceof Cover) {
-						target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-						getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-					} else if (target instanceof Champion) {
-						if (checkDisarm(getCurrentChampion()) == true) {
-							throw new ChampionDisarmedException();
-						} else if (checkShield((Champion) target) == true) {
-							getCurrentChampion()
-									.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-						} else if (checkDodge((Champion) target) == true) {
-							int prob = (int) Math.round(Math.random());
-							if (prob == 1) {
-								target.setCurrentHP(
-										(int) (target.getCurrentHP() - (getCurrentChampion().getAttackDamage())));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							getCurrentChampion()
-									.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-						} else if (target instanceof Hero) {
-							//System.out.print(0);
-							if (getCurrentChampion() instanceof AntiHero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Villain) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Hero) {
-								target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-						} else if (target instanceof Villain) {
-							if (getCurrentChampion() instanceof AntiHero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Hero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Villain) {
-								target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-						} else if (target instanceof AntiHero) {
-							if (getCurrentChampion() instanceof Hero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Villain) {
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-							}
-							if (getCurrentChampion() instanceof AntiHero) {
-								target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-						}
-					}
-				}
-
-			}
-			if (d == Direction.LEFT) {
-				Damageable target = targets(getCurrentChampion().getAttackRange(), Direction.LEFT);
-				if (target == null) {
-					getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-
-				} else {
-					if (target instanceof Cover) {
-						target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-						getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-					} else if (target instanceof Champion) {
-						if (checkDisarm(getCurrentChampion()) == true) {
-							throw new ChampionDisarmedException();
-						} else if (checkShield((Champion) target) == true) {
-							getCurrentChampion()
-									.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-						} else if (checkDodge((Champion) target) == true) {
-							int prob = (int) Math.round(Math.random());
-							if (prob == 1) {
-								target.setCurrentHP(
-										(int) (target.getCurrentHP() - (getCurrentChampion().getAttackDamage())));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							getCurrentChampion()
-									.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-						} else if (target instanceof Hero) {
-							if (getCurrentChampion() instanceof AntiHero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Villain) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Hero) {
-								target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-						} else if (target instanceof Villain) {
-							System.out.print(0);
-
-							if (getCurrentChampion() instanceof AntiHero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Hero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Villain) {
-								target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-						} else if (target instanceof AntiHero) {
-
-							if (getCurrentChampion() instanceof Hero) {
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-							if (getCurrentChampion() instanceof Villain) {
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-								target.setCurrentHP(
-										(target.getCurrentHP() - (int) (getCurrentChampion().getAttackDamage() * 1.5)));
-							}
-							if (getCurrentChampion() instanceof AntiHero) {
-								target.setCurrentHP(target.getCurrentHP() - getCurrentChampion().getAttackDamage());
-								getCurrentChampion()
-										.setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
-							}
-						}
-					}
-				}
-			}
-		}
 		else
 			throw new NotEnoughResourcesException();
 	}
+
 
 	public void castAbility(Ability a) throws CloneNotSupportedException, InvalidTargetException, AbilityUseException, NotEnoughResourcesException {
 		System.out.println(1);

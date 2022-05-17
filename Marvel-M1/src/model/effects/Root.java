@@ -22,7 +22,7 @@ public class Root extends Effect {
 				return;
 		}
 		if(c.getCondition()!=Condition.ROOTED)
-			c.setCondition(Condition.ACTIVE);
+			c.setCondition(Condition.INACTIVE);
 	}
 
 }
