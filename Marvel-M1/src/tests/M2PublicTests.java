@@ -12312,9 +12312,12 @@ public class M2PublicTests {
 					"Casting damaging ability with TEAMTARGET is not applied correctly on targets within range, current HP",
 					expected, returnHp(champ1));
 			expected = ((randomHp2 - randAmout) < 0) ? 0 : (randomHp2 - randAmout);
+			System.out.print(champ2 +""+ randomHp2);
+
 			assertEquals(
 					"Casting damaging ability with TEAMTARGET is not applied correctly on targets within range, current HP",
 					randomHp2, returnHp(champ2));
+		
 
 			assertEquals(
 					"Casting damaging ability with TEAMTARGET should not be applied on targets out of range, current HP",

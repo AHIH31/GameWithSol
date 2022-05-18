@@ -591,10 +591,17 @@ public class Game {
 					ArrayList<Damageable> x = new ArrayList<Damageable>();
 				
 
-					if ((a instanceof HealingAbility)|| (a instanceof CrowdControlAbility&&((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF)) {
+					if ((a instanceof HealingAbility) || (a instanceof CrowdControlAbility&&((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF)) {
+//						int xChamp = getCurrentChampion().getLocation().y;
+//						int yChamp = getCurrentChampion().getLocation().x;
 						
+
 						for (int i = 0; i < 3; i++) {
-							x.add(currentChampPlayer(getCurrentChampion()).getTeam().get(i));
+//							int x1 = currentChampPlayer(getCurrentChampion()).getTeam().get(i).getLocation().y;
+//							int y1 = currentChampPlayer(getCurrentChampion()).getTeam().get(i).getLocation().x;
+//							int distance = Math.abs(yChamp - y1) + Math.abs(xChamp - x1);
+//							if(distance<=a.getCastRange())
+								x.add(currentChampPlayer(getCurrentChampion()).getTeam().get(i));
 						}
 						a.execute(x);
 						getCurrentChampion().setMana(getCurrentChampion().getMana() - a.getManaCost());
@@ -616,11 +623,14 @@ public class Game {
 							x.add(enemyPlayer(getCurrentChampion()).getTeam().get(i));
 						}
 						for (int i = 0; i < x.size(); i++) {
-							if(checkShield((Champion)x.get(i)) == true)
+							if(checkShield((Champion)x.get(i)) == true) {
 								targetsEnemyhWSH.add(x.get(i));
+								System.out.print(targetsEnemyhWSH);
+							}
 							else
 								targetsEnemySh.add(x.get(i));
 						}
+						System.out.print(targetsEnemySh);
 						a.execute(targetsEnemySh);
 					}
 				}
