@@ -589,8 +589,10 @@ public class Game {
 						throw new AbilityUseException();
 				} else if (a.getCastArea() == AreaOfEffect.TEAMTARGET) {
 					ArrayList<Damageable> x = new ArrayList<Damageable>();
-					if ((a instanceof HealingAbility)
-							|| ((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF) {
+				
+
+					if ((a instanceof HealingAbility)|| (a instanceof CrowdControlAbility&&((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF)) {
+						
 						for (int i = 0; i < 3; i++) {
 							x.add(currentChampPlayer(getCurrentChampion()).getTeam().get(i));
 						}
@@ -600,7 +602,7 @@ public class Game {
 								getCurrentChampion().getCurrentActionPoints() - a.getRequiredActionPoints());
 					}
 
-					else if (((CrowdControlAbility) a).getEffect().getType().equals(EffectType.DEBUFF)) {
+					else if (a instanceof CrowdControlAbility && ((CrowdControlAbility) a).getEffect().getType().equals(EffectType.DEBUFF)) {
 						for (int i = 0; i < 3; i++) {
 							x.add(enemyPlayer(getCurrentChampion()).getTeam().get(i));
 						}
@@ -608,31 +610,16 @@ public class Game {
 						getCurrentChampion().setMana(getCurrentChampion().getMana() - a.getManaCost());
 						getCurrentChampion().setCurrentActionPoints(
 								getCurrentChampion().getCurrentActionPoints() - a.getRequiredActionPoints());
-					} else if ((a instanceof DamagingAbility)) {
-						boolean f4 = false;
+					} 
+					else if (a instanceof DamagingAbility) {
 						for (int i = 0; i < 3; i++) {
 							x.add(enemyPlayer(getCurrentChampion()).getTeam().get(i));
 						}
 						for (int i = 0; i < x.size(); i++) {
-							for (int j = 0; j < ((Champion) x.get(i)).getAppliedEffects().size(); j++) {
-								if (((Champion) x.get(i)).getAppliedEffects().get(j).getName().equals("Shield")) {
-									f4 = true;
-									break;
-								} else
-									f4 = false;
-							}
-							if (f4 == true)
+							if(checkShield((Champion)x.get(i)) == true)
 								targetsEnemyhWSH.add(x.get(i));
 							else
 								targetsEnemySh.add(x.get(i));
-						}
-						for (int i = 0; i < targetsEnemyhWSH.size(); i++) {
-							for (int j = 0; j < ((Champion) x.get(i)).getAppliedEffects().size(); j++) {
-								if (((Champion) targetsEnemyhWSH.get(i)).getAppliedEffects().get(j).getName()
-										.equals(("Shield"))) {
-									((Champion) targetsEnemyhWSH.get(i)).getAppliedEffects().remove(j);
-								}
-							}
 						}
 						a.execute(targetsEnemySh);
 					}
