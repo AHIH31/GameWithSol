@@ -11890,6 +11890,7 @@ public class M2PublicTests {
 					expected, returnHp(champ3));
 
 			expected = ((randomHp3 + randAmout) > returnMaxHp(champ4)) ? returnMaxHp(champ4) : (randomHp3 + randAmout);
+	//		System.out.print(champ4);
 			assertEquals(
 					"Casting healing ability with TEAMTARGET is not applied correctly on team members whithin range, current HP",
 					expected, returnHp(champ4));
@@ -12312,7 +12313,7 @@ public class M2PublicTests {
 					"Casting damaging ability with TEAMTARGET is not applied correctly on targets within range, current HP",
 					expected, returnHp(champ1));
 			expected = ((randomHp2 - randAmout) < 0) ? 0 : (randomHp2 - randAmout);
-			System.out.print(champ2 +""+ randomHp2);
+		//	System.out.print(champ2 +""+ randomHp2);
 
 			assertEquals(
 					"Casting damaging ability with TEAMTARGET is not applied correctly on targets within range, current HP",
@@ -16439,7 +16440,7 @@ public class M2PublicTests {
 			}
 
 		}
-
+		System.out.print(secondTeam);
 		assertTrue("Hero useLeaderAbility method should add the effect Embrace to all targets", embrace);
 
 		boolean foundEmbraceOnWrongTarget = false;
@@ -20955,8 +20956,7 @@ public class M2PublicTests {
 		Field board = createdGame.getClass().getDeclaredField("board");
 		board.setAccessible(true);
 		board.set(createdGame, boardGame);
-		Method m00 = createdGame.getClass().getMethod("getCurrentChampion");
-		System.out.println(m00.invoke(createdGame));
+
 
 		Method setSpeed = champ1.getClass().getMethod("setSpeed", int.class);
 		setSpeed.invoke(champ3, 10);
@@ -21035,7 +21035,7 @@ public class M2PublicTests {
 					int attackDamage = (Integer) m4.invoke(champ3);
 
 					int expectedHP = oldHP - attackDamage;
-					System.out.println(champ3);
+				//	System.out.println(champ3);
 
 					assertTrue("The HP of the villain attacked by a villain is not updated correctly. Expected "
 							+ expectedHP + " but was " + newHP + ".", newHP == expectedHP);
@@ -24989,7 +24989,7 @@ public class M2PublicTests {
 
 							Random r = new Random();
 							int durationOne = r.nextInt(10) + 2; 
-							System.out.println("duration" + durationOne);
+						//	System.out.println("duration" + durationOne);
 
 							Object stunEffect = constructor.newInstance(durationOne);
 

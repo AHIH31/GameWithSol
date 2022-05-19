@@ -2,6 +2,7 @@ package model.world;
 
 import java.util.ArrayList;
 
+import model.effects.Effect;
 import model.effects.Stun;
 
 public class AntiHero extends Champion {
@@ -11,19 +12,11 @@ public class AntiHero extends Champion {
 
 	}
 	public void useLeaderAbility(ArrayList<Champion> targets) {
+		Stun a =  new Stun(2);
 		for(int i=0;i<targets.size();i++) {
-			Stun stun = new Stun(2);
-			try {
-				stun.clone();
-			} catch (CloneNotSupportedException e) {
-				
-				e.printStackTrace();
-			}
-			stun.apply(targets.get(i));
+			a.apply(targets.get(i));
+			targets.get(i).getAppliedEffects().add(a);
 		}
-	}
-	public String toString() {
-		return "AntiHero";
 	}
 
 	

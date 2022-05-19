@@ -2,6 +2,7 @@ package model.world;
 
 import java.util.ArrayList;
 
+import model.effects.Effect;
 import model.effects.EffectType;
 import model.effects.Embrace;
 
@@ -18,24 +19,22 @@ public class Hero extends Champion {
 	public void useLeaderAbility(ArrayList<Champion> targets) {
 		for(int i=0;i<targets.size();i++) {
 			for(int j=0;j<targets.get(i).getAppliedEffects().size();j++) {
-				if(targets.get(i).getAppliedEffects().get(j).getType().equals(EffectType.DEBUFF))
-					targets.remove(targets.get(i).getAppliedEffects().get(j));
-			}
-			
-			Embrace embrace = new Embrace(2);
-			try {
-				embrace.clone();
-			} catch (CloneNotSupportedException e) {
+				if(targets.get(i).getAppliedEffects().get(j).getType() == EffectType.DEBUFF) {
+					targets.get(i).getAppliedEffects().get(j).remove(targets.get(i));
+					targets.get(i).getAppliedEffects().remove(j);
+					j--
+					;
 				
-				e.printStackTrace();
+				}
 			}
+			Embrace embrace = new Embrace(2);
 			embrace.apply(targets.get(i));
+			targets.get(i).getAppliedEffects().add(embrace);
+
 		}
 		
 	}
-	public String toString() {
-		return "Hero";
-	}
+
 
 	
 }

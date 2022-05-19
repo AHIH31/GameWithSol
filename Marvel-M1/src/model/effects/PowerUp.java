@@ -27,7 +27,6 @@ public class PowerUp extends Effect {
 	
 	}
 	public void remove(Champion c) {
-		c.getAppliedEffects().remove(this);
 		for(int i = 0; i<c.getAbilities().size(); i++) {
 			if(c.getAbilities().get(i) instanceof DamagingAbility) {
 				double x =((((DamagingAbility) c.getAbilities().get(i))).getDamageAmount() / 1.2);

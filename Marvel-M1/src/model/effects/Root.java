@@ -16,7 +16,6 @@ public class Root extends Effect {
 	}
 
 	public void remove(Champion c) {
-		c.getAppliedEffects().remove(this);
 		for(int i=0;i<c.getAppliedEffects().size();i++) {
 			if(c.getAppliedEffects().get(i).getName().equals("Stun"))
 				return;
