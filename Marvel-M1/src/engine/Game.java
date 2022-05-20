@@ -533,7 +533,7 @@ public class Game {
 					else if (a instanceof CrowdControlAbility && ((CrowdControlAbility) a).getEffect().getType().equals(EffectType.DEBUFF)) {
 						int xChamp = getCurrentChampion().getLocation().y;
 						int yChamp = getCurrentChampion().getLocation().x;
-						for (int i = 0; i < 3; i++) {
+						for (int i = 0; i < enemyPlayer(getCurrentChampion()).getTeam().size(); i++) {
 							int x1 =  enemyPlayer(getCurrentChampion()).getTeam().get(i).getLocation().y;
 							int y1 =  enemyPlayer(getCurrentChampion()).getTeam().get(i).getLocation().x;
 							int distance = Math.abs(yChamp - y1) + Math.abs(xChamp - x1);
@@ -548,7 +548,7 @@ public class Game {
 					else if (a instanceof DamagingAbility) {
 						int xChamp = getCurrentChampion().getLocation().y;
 						int yChamp = getCurrentChampion().getLocation().x;
-						for (int i = 0; i < 3; i++) {
+						for (int i = 0; i < enemyPlayer(getCurrentChampion()).getTeam().size(); i++) {
 							int x1 = enemyPlayer(getCurrentChampion()).getTeam().get(i).getLocation().y;
 							int y1 = enemyPlayer(getCurrentChampion()).getTeam().get(i).getLocation().x;
 							int distance = Math.abs(yChamp - y1) + Math.abs(xChamp - x1);
