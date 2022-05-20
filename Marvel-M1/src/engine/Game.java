@@ -538,8 +538,6 @@ public class Game {
 					if ((a instanceof HealingAbility) || (a instanceof CrowdControlAbility&&((CrowdControlAbility) a).getEffect().getType() == EffectType.BUFF)) {
 						int xChamp = getCurrentChampion().getLocation().y;
 						int yChamp = getCurrentChampion().getLocation().x;
-						
-
 						for (int i = 0; i < currentChampPlayer(getCurrentChampion()).getTeam().size(); i++) {
 							int x1 = currentChampPlayer(getCurrentChampion()).getTeam().get(i).getLocation().y;
 							int y1 = currentChampPlayer(getCurrentChampion()).getTeam().get(i).getLocation().x;
@@ -555,7 +553,6 @@ public class Game {
 					else if (a instanceof CrowdControlAbility && ((CrowdControlAbility) a).getEffect().getType().equals(EffectType.DEBUFF)) {
 						int xChamp = getCurrentChampion().getLocation().y;
 						int yChamp = getCurrentChampion().getLocation().x;
-					
 						for (int i = 0; i < 3; i++) {
 							int x1 =  enemyPlayer(getCurrentChampion()).getTeam().get(i).getLocation().y;
 							int y1 =  enemyPlayer(getCurrentChampion()).getTeam().get(i).getLocation().x;
@@ -889,11 +886,6 @@ public class Game {
 					}
 			} 
 		}
-				
-			 
-
-
-	
 
 	public void endTurn() {
 		turnOrder.remove();
@@ -973,9 +965,6 @@ public class Game {
 			if (flagUp == true) {
 				return (Damageable) board[y + indexUp][x];
 			} 
-//			else {
-//				getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 1);
-//			}
 		}
 		 else if (d == Direction.DOWN) {
 			 boolean flagDown = false;
@@ -992,9 +981,6 @@ public class Game {
 				if (flagDown == true) {
 					return (Damageable) board[y-indexDown][x];
 				} 
-//				else {
-//					getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 1);
-//				}
 				}
 		 else if (d == Direction.RIGHT) {
 			boolean flagRight = false;
@@ -1009,8 +995,6 @@ public class Game {
 			}
 			if (flagRight == true)
 				return ((Damageable) board[y][x + indexRight]);
-//			else
-//				getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 1);
 		} 
 		 else if (d == Direction.LEFT) {
 			boolean flagLeft = false;
@@ -1026,9 +1010,7 @@ public class Game {
 			if (flagLeft == true) {
 				return (Damageable) board[y][x - indexLeft];
 			}
-//			else
-//				getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 1);
-		}
+		 }
 		return null;
 	}
 
@@ -1064,9 +1046,7 @@ public class Game {
 				}
 			}
 		}
-		
 		return damg;
-
 	}
 
 	public Player enemyPlayer(Champion currentCh) {
@@ -1097,7 +1077,6 @@ public class Game {
 		}
 		return f;
 	}
-	
 	
 	public boolean checkDisarm(Champion currentCh) {
 		boolean f = false;
@@ -1186,7 +1165,6 @@ public class Game {
 			targets.add( (Damageable) board[y+1][x-1]);
 		if( y-1>=0 && x+1<=4   &&  board[y-1][x+1] != null)
 			targets.add( (Damageable) board[y-1][x+1]);
-	
 		return targets;
 	}
 	

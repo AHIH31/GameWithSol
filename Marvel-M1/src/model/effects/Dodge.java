@@ -14,7 +14,6 @@ public class Dodge extends Effect {
 	
 		c.setSpeed((int)(c.getSpeed() * 1.05));
 	}
-
 	public void remove(Champion c) { 
 		double x = c.getSpeed()/1.05;
 		c.setSpeed((int) x);
