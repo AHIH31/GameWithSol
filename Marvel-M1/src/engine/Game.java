@@ -333,8 +333,7 @@ public class Game {
 			throw new NotEnoughResourcesException();
 	}
 
-	public void attack(Direction d)
-			throws InvalidTargetException, ChampionDisarmedException, NotEnoughResourcesException {
+	public void attack(Direction d)throws InvalidTargetException, ChampionDisarmedException, NotEnoughResourcesException {
 		
 		Damageable target = targets(getCurrentChampion().getAttackRange(), d);
 		if (getCurrentChampion().getCurrentActionPoints() >= 2) {			
@@ -357,11 +356,10 @@ public class Game {
 							throw new ChampionDisarmedException();
 						} 
 						else if (checkShield((Champion) target) == true) {
-							
 							getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
 						}
 							
-					 else { if (checkDodge((Champion) target) == true) {
+					 else if (checkDodge((Champion) target) == true) {
 							getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints() - 2);
 						} 
 							else {if (target instanceof Hero) {
@@ -427,7 +425,7 @@ public class Game {
 				}
 					}
 	
-				}
+				
 		else
 			throw new NotEnoughResourcesException();
 	}
@@ -446,28 +444,10 @@ public class Game {
 			throw new NotEnoughResourcesException();
 		if(a.getCurrentCooldown()!=0)
 			throw new AbilityUseException();
-		if (checkStun(getCurrentChampion()) == true) {
-			for (int i = 0; i < getCurrentChampion().getAppliedEffects().size(); i++) {
-				if (getCurrentChampion().getAppliedEffects().get(i).getName().equals("Stun")) {
-					if (getCurrentChampion().getAppliedEffects().get(i).getDuration() > 1)
-						getCurrentChampion().getAppliedEffects().get(i).setDuration(getCurrentChampion().getAppliedEffects().get(i).getDuration() - 1);
-					else
-						getCurrentChampion().getAppliedEffects().remove(i);
-				}
-			}
-		} else {
-			if (checkSilence(getCurrentChampion())== true) {
-				
-				for (int i = 0; i < getCurrentChampion().getAppliedEffects().size(); i++) {
-					if (getCurrentChampion().getAppliedEffects().get(i).getName().equals("Silence")) {
-						if (getCurrentChampion().getAppliedEffects().get(i).getDuration() > 1)
-							getCurrentChampion().getAppliedEffects().get(i).setDuration(getCurrentChampion().getAppliedEffects().get(i).getDuration() - 1);
-						else
-							getCurrentChampion().getAppliedEffects().remove(i);
-					}
-				}
-				throw new AbilityUseException();
-			} 
+		if (checkStun(getCurrentChampion()) == true) 
+			throw new AbilityUseException();
+		else if (checkSilence(getCurrentChampion())== true) 
+			throw new AbilityUseException();
 			else {
 				for (int i = 0; i < targets.size(); i++) {
 					
@@ -587,9 +567,7 @@ public class Game {
 				}
 			}
 		}
-
-	}
-
+	
 
 	public void castAbility(Ability a, Direction d) throws CloneNotSupportedException, AbilityUseException, NotEnoughResourcesException {
 		ArrayList<Damageable> targets = targetsCast(getCurrentChampion().getAttackRange(), d);
@@ -603,28 +581,10 @@ public class Game {
 			throw new NotEnoughResourcesException();
 
 		if (a.getCastArea() == AreaOfEffect.DIRECTIONAL) {
-			if (checkStun(getCurrentChampion()) == true) {
-				for (int i = 0; i < getCurrentChampion().getAppliedEffects().size(); i++) {
-					if (getCurrentChampion().getAppliedEffects().get(i).getName().equals("Stun")) {
-						if (getCurrentChampion().getAppliedEffects().get(i).getDuration() > 1)
-							getCurrentChampion().getAppliedEffects().get(i).setDuration(getCurrentChampion().getAppliedEffects().get(i).getDuration() - 1);
-						else
-							getCurrentChampion().getAppliedEffects().remove(i);
-					}
-				}
-			} else {
-				if (checkSilence(getCurrentChampion())== true) {
-					
-					for (int i = 0; i < getCurrentChampion().getAppliedEffects().size(); i++) {
-						if (getCurrentChampion().getAppliedEffects().get(i).getName().equals("Silence")) {
-							if (getCurrentChampion().getAppliedEffects().get(i).getDuration() > 1)
-								getCurrentChampion().getAppliedEffects().get(i).setDuration(getCurrentChampion().getAppliedEffects().get(i).getDuration() - 1);
-							else
-								getCurrentChampion().getAppliedEffects().remove(i);
-						}
-					}
-					throw new AbilityUseException();
-				} 
+			if (checkStun(getCurrentChampion()) == true) 
+				throw new AbilityUseException();
+			else if (checkSilence(getCurrentChampion())== true) 
+				throw new AbilityUseException();
 				else {
 					
 					for (int i = 0; i < targets.size(); i++) {
@@ -673,7 +633,6 @@ public class Game {
 					}
 
 				}
-			}
 		}
 	}
 
@@ -686,29 +645,12 @@ public class Game {
 			throw new NotEnoughResourcesException();
 		if(a.getCurrentCooldown()!=0)
 			throw new AbilityUseException();
-		if (checkStun(getCurrentChampion()) == true) {
-			for (int i = 0; i < getCurrentChampion().getAppliedEffects().size(); i++) {
-				if (getCurrentChampion().getAppliedEffects().get(i).getName().equals("Stun")) {
-					if (getCurrentChampion().getAppliedEffects().get(i).getDuration() > 1)
-						getCurrentChampion().getAppliedEffects().get(i).setDuration(getCurrentChampion().getAppliedEffects().get(i).getDuration() - 1);
-					else
-						getCurrentChampion().getAppliedEffects().remove(i);
-				}
-			}
-		} 
-		else {
-			if (checkSilence(getCurrentChampion())== true) {
-				for (int i = 0; i < getCurrentChampion().getAppliedEffects().size(); i++) {
-					if (getCurrentChampion().getAppliedEffects().get(i).getName().equals("Silence")) {
-						if (getCurrentChampion().getAppliedEffects().get(i).getDuration() > 1)
-							getCurrentChampion().getAppliedEffects().get(i).setDuration(getCurrentChampion().getAppliedEffects().get(i).getDuration() - 1);
-						else
-							getCurrentChampion().getAppliedEffects().remove(i);
-					}
-				}
-				throw new AbilityUseException();
-			} 
-		}
+		if (checkStun(getCurrentChampion()) == true) 
+			throw new AbilityUseException();
+		else if (checkSilence(getCurrentChampion())== true) 
+			throw new AbilityUseException();
+			
+		
 		
 		if (a.getCastArea() == AreaOfEffect.SINGLETARGET) {
 			if (board[x][y] != null) {
@@ -1083,7 +1025,6 @@ public class Game {
 		for (int i = 0; i < currentCh.getAppliedEffects().size(); i++) {
 			if (currentCh.getAppliedEffects().get(i).getName().equals("Disarm")) {
 				f = true;
-				currentCh.getAppliedEffects().get(i).remove(currentCh);
 				break;
 				}
 			}
@@ -1136,9 +1077,8 @@ public class Game {
 		}
 		if(f) {
 			Random rand = new Random();
-			if(rand.nextInt(2) == 0) {
-				currentCh.getAppliedEffects().get(i).remove(currentCh);
-				return true;}
+			if(rand.nextInt(2) == 0) 
+				return true;
 			else 
 				return false;
 		}
