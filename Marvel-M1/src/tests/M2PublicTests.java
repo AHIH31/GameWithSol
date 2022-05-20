@@ -23835,7 +23835,6 @@ public class M2PublicTests {
 
 							for (int i = 0; i < turnOrderSizeUpdated; i++) {
 								if (remove.invoke(turnOrder) == champ6) {
-									System.out.println(champ6);
 									fail("Champion should be removed from the turnOrder queue after being attacked if HP reaches 0.");
 								}
 
