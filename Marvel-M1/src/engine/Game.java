@@ -767,27 +767,27 @@ public class Game {
 			if (enemyPlayer(getCurrentChampion()) == firstPlayer) {
 				if (firstPlayer.getLeader() == getCurrentChampion())
 					throw new LeaderNotCurrentException();
-				else if (isFirstLeaderAbilityUsed() == false) {
-					for (int i = 0; i < currentChampPlayer(getCurrentChampion()).getTeam().size(); i++) {
+				else if (isSecondLeaderAbilityUsed() == false) {
+					for (int i = 0; i < enemyPlayer(getCurrentChampion()).getTeam().size(); i++) {
 							leaderTeam.add(firstPlayer.getTeam().get(i));
 							}
 					getCurrentChampion().useLeaderAbility(leaderTeam);
-					firstLeaderAbilityUsed = true;
+					secondLeaderAbilityUsed = true;
 				} 
-				else if (isFirstLeaderAbilityUsed() == true)
+				else if (isSecondLeaderAbilityUsed() == true)
 					throw new LeaderAbilityAlreadyUsedException();
 			}
 			else if (enemyPlayer(getCurrentChampion()) == secondPlayer) {
 				if (secondPlayer.getLeader() == getCurrentChampion())
 					throw new LeaderNotCurrentException();
-				else if (isSecondLeaderAbilityUsed() == false) {
-					for (int i = 0; i < currentChampPlayer(getCurrentChampion()).getTeam().size(); i++) {
+				else if (isFirstLeaderAbilityUsed() == false) {
+					for (int i = 0; i < enemyPlayer(getCurrentChampion()).getTeam().size(); i++) {
 						leaderTeam.add(secondPlayer.getTeam().get(i));
 					}
 					getCurrentChampion().useLeaderAbility(leaderTeam);
-					secondLeaderAbilityUsed = true;
+					firstLeaderAbilityUsed = true;
 				} 
-				else if (isSecondLeaderAbilityUsed() == true)
+				else if (isFirstLeaderAbilityUsed() == true)
 					throw new LeaderAbilityAlreadyUsedException();
 				}
 			}
