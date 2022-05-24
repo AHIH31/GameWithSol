@@ -579,6 +579,8 @@ public class Game {
 
 		if(getCurrentChampion().getMana() < a.getManaCost() || getCurrentChampion().getCurrentActionPoints()<a.getRequiredActionPoints() )
 			throw new NotEnoughResourcesException();
+		if(a.getCurrentCooldown()!= 0 )
+			throw new AbilityUseException();
 
 		if (a.getCastArea() == AreaOfEffect.DIRECTIONAL) {
 			if (checkStun(getCurrentChampion()) == true) 
@@ -649,6 +651,8 @@ public class Game {
 			throw new AbilityUseException();
 		else if (checkSilence(getCurrentChampion())== true) 
 			throw new AbilityUseException();
+	
+	
 			
 		
 		
@@ -680,6 +684,8 @@ public class Game {
 							getCurrentChampion().setCurrentActionPoints(getCurrentChampion().getCurrentActionPoints()- a.getRequiredActionPoints());
 						}
 					}
+					else
+						throw new InvalidTargetException();
 				} 
 				else if (a instanceof DamagingAbility && board[x][y] == getCurrentChampion()) {
 					throw new InvalidTargetException();
