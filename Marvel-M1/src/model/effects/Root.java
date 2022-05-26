@@ -16,12 +16,13 @@ public class Root extends Effect {
 	}
 
 	public void remove(Champion c) {
+		boolean f = false;
 		for(int i=0;i<c.getAppliedEffects().size();i++) {
-			if(c.getAppliedEffects().get(i).getName().equals("Stun"))
-				return;
+			if(c.getAppliedEffects().get(i).getName().equals("Root"))
+				f =true ;
 		}
-		if(c.getCondition()!=Condition.ROOTED)
-			c.setCondition(Condition.INACTIVE);
+		if(!f && c.getCondition()!=Condition.INACTIVE)
+			c.setCondition(Condition.ACTIVE);
 	}
 
 }

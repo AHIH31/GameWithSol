@@ -13,17 +13,13 @@ public class Disarm extends Effect {
 	}
 
 	public void apply(Champion c) {
-		DamagingAbility Punch = new DamagingAbility("Punch", 0, 1, 1, AreaOfEffect.SINGLETARGET, 1, 50);
-		c.getAbilities().add(Punch);
-	
-		
+		c.getAbilities().add(new DamagingAbility("Punch", 0, 1, 1, AreaOfEffect.SINGLETARGET, 1, 50));
 	}
 
 	public void remove(Champion c) {
 		for(int i=0;i<c.getAbilities().size();i++) {
-			if(c.getAbilities().get(i).getName().equals("Punch")){
+			if(c.getAbilities().get(i).getName().equals("Punch"))
 				c.getAbilities().remove(i);
-	}
-	}
-	}
+			}
+		}
 }

@@ -10,13 +10,12 @@ public class Silence extends Effect {
 	}
 
 	public void apply(Champion c) {
-	
-		c.setMaxActionPointsPerTurn((int)(c.getMaxActionPointsPerTurn() + 2));
-		c.setCurrentActionPoints((int)(c.getCurrentActionPoints() + 2));
+		c.setCurrentActionPoints(c.getCurrentActionPoints()+2);
+		c.setMaxActionPointsPerTurn(c.getMaxActionPointsPerTurn()+2);
 	}
 	public void remove(Champion c) {
-		c.setMaxActionPointsPerTurn((int)(c.getMaxActionPointsPerTurn() - 2));
-		c.setCurrentActionPoints((int)(c.getCurrentActionPoints() - 2));
+		c.setCurrentActionPoints(c.getCurrentActionPoints()-2);
+		c.setMaxActionPointsPerTurn(c.getMaxActionPointsPerTurn()-2);
 	}
 
 }

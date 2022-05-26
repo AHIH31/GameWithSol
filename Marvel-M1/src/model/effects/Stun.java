@@ -20,15 +20,13 @@ public class Stun extends Effect {
 				f = true;
 				break;
 			}
-			
 		}
 		if(f==true) {
 			if(c.getCondition()!=Condition.ROOTED) {
-				c.setCondition(Condition.INACTIVE);
-				
+				c.setCondition(Condition.INACTIVE);	
 			}
 			else {
-				c.setCondition(Condition.ACTIVE);
+				c.setCondition(Condition.INACTIVE);
 			}
 	}
 		else {
