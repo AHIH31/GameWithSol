@@ -853,12 +853,15 @@ public class Game {
 							getCurrentChampion().getAppliedEffects().remove(k);
 							k--;
 						}
+
+
 					}
 					turnOrder.remove();	
 				}
 				else
 					break;
 			}
+			
 			if (turnOrder.isEmpty()) {
 				prepareChampionTurns();
 				}
