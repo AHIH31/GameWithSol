@@ -1,8 +1,9 @@
 package views;
-
+	
 import java.io.File;
 
 import engine.Game;
+import engine.Player;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -42,22 +43,28 @@ import javafx.scene.text.Font;
 
 public class Main extends Application{
 	
-	Stage window;
-	Scene names;
-	Scene welcome;
-	Button exit;
-	Button playBtn;
-	Button startGame;
-	TextField firstField;
-	TextField secondField;
-	Label first;
-	Label second;
-	Button showFirstCard;
+	private Stage window;
+	private Scene names;
+	private Scene welcome;
+	private Button exit;
+	public Button playBtn;
+	private Button startGame;
+	private TextField firstField;
+	private TextField secondField;
+	private GridPane layout;
+	private Label first;
+	private Label second;
+	private Button showFirstCard;
 	public void start(Stage primaryStage) {
 		try {
+			Image icon = new Image(getClass().getResource("icon.jpg").toExternalForm());		
 			Media media = new Media(getClass().getResource("movie.mp4").toExternalForm());
+			
 			MediaPlayer mediaPlayer = new MediaPlayer(media);   
+			
 			window = primaryStage;
+			window.setResizable(true);
+			window.getIcons().add(icon);
 			window.initStyle(StageStyle.UNDECORATED);
 		    Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
 			GridPane root = new GridPane();
@@ -67,7 +74,6 @@ public class Main extends Application{
 			root.setBackground(Background.fill(Color.BLACK));
 			root.setHgap(8);
 			window.setScene(screen);
-			//Game a = new Game();
 			mediaPlayer.setAutoPlay(true);  
 			MediaView mediaView = new MediaView (mediaPlayer);
 			mediaView.fitWidthProperty().bind(window.widthProperty());
@@ -82,21 +88,25 @@ public class Main extends Application{
 			});
 			
 			GridPane play = new GridPane();
+			
 			play.setVgap(10);
 			play.setHgap(8);
 			welcome = new Scene(play,screenSize.getWidth(),screenSize.getHeight());
+			Media theme = new Media(getClass().getResource("theme.mp3").toExternalForm());
+			MediaPlayer themePlayer = new MediaPlayer(theme);
 			Image img = new Image(getClass().getResource("wallpaper.jpg").toExternalForm());
 			Image img2 = new Image(getClass().getResource("button.png").toExternalForm());
 			Image exitImg = new Image(getClass().getResource("exitimage.png").toExternalForm());
 			BackgroundImage bImg = new BackgroundImage(img,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT,
+                    BackgroundPosition.CENTER,
                     BackgroundSize.DEFAULT);
 			Background bGround = new Background(bImg);
 	        ImageView imageView = new ImageView(img2);
 	        ImageView imageViewExit= new ImageView(exitImg);
 	        imageView.setFitWidth(4);
+	      
 	        imageView.setScaleX(3);
 	        imageView.setScaleY(3);
 	        imageView.setFitHeight(4);
@@ -105,29 +115,29 @@ public class Main extends Application{
 	        imageViewExit.setScaleY(3);
 	        imageViewExit.setFitHeight(4);
 			play.setBackground(bGround);
-			startGame = new Button("Start Game", imageView);
+			startGame = new Button(" Start Game", imageView);
 			startGame.setOnAction(e->{
+				themePlayer.setVolume(10);
 				window.setScene(names);
-				mediaPlayer.setVolume(10);
+				mediaPlayer.setVolume(0);
 			});
-			startGame.setScaleX(4);
-			startGame.setBorder(Border.stroke(Color.DARKGOLDENROD));
-			startGame.setScaleY(4);
-			startGame.setBackground(Background.fill(Color.BLACK));
-			startGame.setTextFill(Color.DARKGOLDENROD);
-			play.add(startGame,80,90);
+			startGame.setScaleX(3);
+			startGame.setBorder(Border.stroke(Color.MEDIUMBLUE));
+			startGame.setScaleY(3);
+			startGame.setBackground(Background.fill(Color.DARKRED));
+			startGame.setTextFill(Color.WHITE);
+			play.add(startGame,90,60);
 			exit = new Button("Exit", imageViewExit);
 			exit.setOnAction(e->window.close());
-			exit.setScaleX(4);			
-			exit.setScaleY(4);
-			exit.setBorder(Border.stroke(Color.DARKGOLDENROD));
+			exit.setScaleX(1.5);			
+			exit.setScaleY(1.5);
+			exit.setBorder(Border.stroke(Color.DARKRED));
 			exit.setBackground(Background.fill(Color.BLACK));
-			exit.setTextFill(Color.DARKGOLDENROD);
-			play.add(exit,150,90);
+			exit.setTextFill(Color.WHITE);
+			play.add(exit,174,1);
 			
 			
-			
-			GridPane layout = new GridPane();
+			layout = new GridPane();
 			layout.setAlignment(Pos.CENTER_LEFT);
 			layout.setVgap(10);
 			layout.setHgap(8);
@@ -140,18 +150,17 @@ public class Main extends Application{
 			firstField.setScaleX(1.5);
 			firstField.setBackground(Background.fill(Color.DARKGREY));
 			secondField.setBackground(Background.fill(Color.DARKGREY));
-
 			firstField.setScaleY(1.5);
 			secondField.setScaleX(1.5);
 			secondField.setScaleY(1.5);
 			first = new Label();
 			second = new Label();
-			first.setText("First Player: ");
+			first.setText(" First Player: ");
 			first.setTextFill(Color.WHITE);
-			first.setBorder(Border.stroke(Color.DARKGOLDENROD));
-			second.setText("Second Player: ");
+			first.setBorder(Border.stroke(Color.DARKRED));
+			second.setText(" Second Player: ");
 			second.setTextFill(Color.WHITE);
-			second.setBorder(Border.stroke(Color.DARKGOLDENROD));
+			second.setBorder(Border.stroke(Color.DARKRED));
 			first.setScaleX(2);
 			first.setScaleY(2);
 			first.setBackground(Background.fill(Color.BLACK));
@@ -162,25 +171,24 @@ public class Main extends Application{
 			showFirstCard.setOnAction(e->firstCard.Display(first.getText()));
 			showFirstCard.setText("Show first player info");
 			ImageView imageView2 = new ImageView(img2);
-			playBtn = new Button("Play!", imageView2);
-			playBtn.setOnAction(e->{
-				window.setScene(names);
-				mediaPlayer.setVolume(0);
-			});
+			playBtn = new Button(" Play!", imageView2);
+			playBtn.setOnAction(e-> new Controller().Play(firstField,secondField,window));
 			imageView2.setFitWidth(4);
 		    imageView2.setScaleX(3);
 		    imageView2.setScaleY(3);
 		    imageView2.setFitHeight(4);
 			playBtn.setScaleX(3);
-			playBtn.setBorder(Border.stroke(Color.DARKGOLDENROD));
+			playBtn.setBorder(Border.stroke(Color.MEDIUMBLUE));
 			playBtn.setScaleY(3);
-			playBtn.setBackground(Background.fill(Color.BLACK));
-			playBtn.setTextFill(Color.DARKGOLDENROD);
-			layout.add(firstField,70,50);
-			layout.add(secondField,130,50);
-			layout.add(first, 70, 47);
-			layout.add(second, 130, 47);
-			layout.add(playBtn, 100, 60);
+			playBtn.setBackground(Background.fill(Color.DARKRED));
+			playBtn.setTextFill(Color.WHITE);
+			layout.add(firstField,40,50);
+			layout.add(secondField,100,50);
+			layout.add(first, 40, 47);
+			layout.add(second, 100, 47);
+			layout.add(playBtn, 75, 60);
+			
+				
 			
 			window.setFullScreen(true);
 			window.setResizable(false);
@@ -188,13 +196,21 @@ public class Main extends Application{
 			
 			
 			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+	public Button getPlayButton() {
+		return playBtn;
+		
+	}
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	public GridPane getNamesLayout() {
+		return layout;
 	}
 
 
